@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Online Text Obfuscator</title>
+    <script src="unv.js"></script>
     <script src="obfuscator.js"></script>
     <style>
         body {
@@ -67,9 +68,9 @@
             console.log("Input: length=" + inputField.value.length + ", value=" + inputField.value);
             try
             {
-                var obfuscatedText = obfuscate(inputField.value)
-                outputField.value = obfuscatedText;
-                console.log("Output: length=" + obfuscatedText.length + ", value=" + obfuscatedText);
+                var outputText = obfuscate(unvEncode(inputField.value));
+                outputField.value = outputText;
+                console.log("Output: length=" + outputText.length + ", value=" + outputText);
             }
             catch (e)
             {
