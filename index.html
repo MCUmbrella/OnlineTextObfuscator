@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Online Text Obfuscator</title>
+    <script src="obfuscator.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 0px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .app {
+            width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: solid 1px;
+        }
+
+        .input-field {
+            margin-bottom: 20px;
+            padding: 0px;
+        }
+
+        .output-field {
+            margin-top: 20px;
+            padding: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <h1>Online Text Obfuscator</h1>
+        <div class="input-field">
+            <textarea id="inputText" placeholder="Enter the text here"></textarea>
+        </div>
+        <button id="obfuscateButton">Obfuscate</button>
+        <div class="output-field">
+            <textarea id="outputText" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        function onObfuscateClick()
+        {
+            var inputField = document.getElementById("inputText");
+            var outputField = document.getElementById("outputText");
+
+            console.log("Input: length=" + inputField.value.length + ", value=" + inputField.value);
+            try
+            {
+                var obfuscatedText = obfuscate(inputField.value)
+                outputField.value = obfuscatedText;
+                console.log("Output: length=" + obfuscatedText.length + ", value=" + obfuscatedText);
+            }
+            catch (e)
+            {
+                outputField.value = "Error: " + e.message;
+                console.log(e);
+            }
+        }
+
+        document.getElementById("obfuscateButton").addEventListener(
+            "click",
+            onObfuscateClick
+        );
+
+        console.log("The obfuscator is ready");
+    </script>
+</body>
+
+</html>
