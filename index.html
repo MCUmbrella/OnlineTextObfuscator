@@ -8,40 +8,71 @@
     <script src="obfuscator.js"></script>
     <style>
         body {
+            background-color: #57a8a8;
             margin: 0;
             padding: 0;
         }
 
-        h1 {
-            text-align: center;
-            margin-top: 0px;
-        }
-
         textarea {
+            background-color: white;
+            color: black;
+            border-style: inset;
+            border-width: 2px;
             width: 100%;
             height: 100px;
         }
 
         button {
+            background-color: #c0c7c8;
+            color: black;
+            outline-style: outset;
+            outline-width: 2px;
+            border-style: outset;
+            border-width: 2px;
             width: 100%;
+            margin-top: 10px;
+            margin-bottom: 10px;
             padding: 10px;
             font-size: 16px;
         }
 
+        button:active {
+            outline-style: inset;
+            border-style: inset;
+            transform: translate(4px, 4px);
+        }
+
         .app {
             width: 500px;
-            margin: 50px auto;
+            margin: 20px auto;
+            border-style: ridge;
+            border-width: 6px;
+            border-color: lightgray;
+        }
+
+        .title-bar {
+            background-color: #0000a8;
+            color: white;
+            margin: 0px;
+            text-align: center;
+        }
+
+        .content-pane {
+            background-color: #c0c7c8;
+            border-style: inset;
+            border-width: 2px;
+            margin: 0px auto;
             padding: 20px;
-            border: solid 1px;
         }
 
         .input-field {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             padding: 0px;
         }
 
         .output-field {
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
             padding: 0px;
         }
     </style>
@@ -49,22 +80,27 @@
 
 <body>
     <div class="app">
-        <h1>Online Text Obfuscator</h1>
-        <div class="input-field">
-            <textarea id="inputText" placeholder="Enter the text here"></textarea>
-        </div>
-        <button id="obfuscateButton">Obfuscate</button>
-        <div class="output-field">
-            <textarea id="outputText" readonly></textarea>
+        <h1 class="title-bar">Online Text Obfuscator</h1>
+        <div class="content-pane">
+            <div class="input-field">
+                <textarea id="inputText" placeholder="Enter the text here"></textarea>
+            </div>
+            <button id="obfuscateButton" onclick="onObfuscateClick()">Obfuscate</button>
+            <div class="output-field">
+                <textarea id="outputText" placeholder="The obfuscated text will be displayed here" readonly></textarea>
+            </div>
+            <button id="copyButton" onclick="onCopyClick()">Copy output</button>
+            <button id="resetButton" onclick="onResetClick()">Reset</button>
         </div>
     </div>
 
     <script>
+        var inputField = document.getElementById("inputText");
+        var outputField = document.getElementById("outputText");
+        var copyButton = document.getElementById("copyButton");
+
         function onObfuscateClick()
         {
-            var inputField = document.getElementById("inputText");
-            var outputField = document.getElementById("outputText");
-
             console.log("Input: length=" + inputField.value.length + ", value=" + inputField.value);
             try
             {
@@ -77,12 +113,24 @@
                 outputField.value = "Error: " + e.message;
                 console.log(e);
             }
+            copyButton.textContent = "Copy output";
         }
 
-        document.getElementById("obfuscateButton").addEventListener(
-            "click",
-            onObfuscateClick
-        );
+        function onCopyClick()
+        {
+            if(outputField.value.length != 0)
+            {
+                navigator.clipboard.writeText(outputField.value);
+                copyButton.textContent = "Copied";
+            }
+        }
+
+        function onResetClick()
+        {
+            inputField.value = "";
+            outputField.value = "";
+            copyButton.textContent = "Copy output";
+        }
 
         console.log("The obfuscator is ready");
     </script>
